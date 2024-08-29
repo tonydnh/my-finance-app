@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import Option from './Option';
 
-function Home() {
+export default function Home() {
+  const navigate = useNavigate();
 
   return (
     <div className="h-screen flex flex-col items-center justify-center gap-4">
@@ -8,11 +10,9 @@ function Home() {
         Hello!
       </div>
 
-      <Option textLabel="Create a custom spending category" buttonLabel="Create" onClick={() => {}} />
+      <Option textLabel="Create a custom spending category" buttonLabel="Create" onClick={() => navigate("/create")} />
       <Option textLabel="Mark transactions" buttonLabel="Mark" onClick={() => {}} />
       <Option textLabel="View Spending" buttonLabel="View" onClick={() => {}} />
     </div>
   );
 }
-
-export default Home;

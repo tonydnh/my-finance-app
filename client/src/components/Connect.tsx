@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTellerConnect } from 'teller-connect-react';
 
-function Connect() {
+export default function Connect() {
   const navigate = useNavigate();
 
   const {open, ready} = useTellerConnect({ 
@@ -9,6 +9,7 @@ function Connect() {
     environment: "sandbox",
     onSuccess: (enrollment) => {
       console.log(`User enrolled successfully. Their access token: ${enrollment.accessToken}`);
+      console.log(enrollment);
       navigate("/home");
     },
   });
@@ -33,5 +34,3 @@ function Connect() {
     </div>
   );
 }
-
-export default Connect;
