@@ -44,24 +44,16 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col gap-40">
-      <button
-        onClick={signUserOut}
-        className="px-3 py-2 mt-2 mr-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300 self-end"
-      >
-        Sign Out
-      </button>
-      <div className="flex flex-col items-center justify-center gap-4">
-        {record && (
-          <div className="font-bold text-6xl mb-4">
-            Hello, {record.firstName}!
-          </div>
-        )}
+    <div className="h-full flex flex-col items-center justify-center gap-4">
+      {record && (
+        <div className="font-bold text-6xl mb-4">
+          Hello, {record.firstName}!
+        </div>
+      )}
 
-        <Option textLabel="Create a custom spending category" buttonLabel="Create" onClick={() => navigate("/create")} />
-        <Option textLabel="Mark transactions" buttonLabel="Mark" onClick={() => {}} />
-        <Option textLabel="View Spending" buttonLabel="View" onClick={() => {}} />
-      </div>
+      <Option textLabel="Create a custom spending category" buttonLabel="Create" onClick={() => navigate("/create")} />
+      <Option textLabel="Mark transactions" buttonLabel="Mark" onClick={() => {}} />
+      <Option textLabel="View Spending" buttonLabel="View" onClick={() => {}} />
     </div>
   );
 }

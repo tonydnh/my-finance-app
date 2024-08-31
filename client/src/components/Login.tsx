@@ -18,7 +18,7 @@ export default function Login() {
   async function handleLogin(loginData: LogInFormData) {
     try {
       const userCredential = await logInUser(loginData.email, loginData.password);
-      navigate("/home");
+      navigate("/connect");
     } catch (err) {
       setError("Email and/or password is incorrect.");
     }
@@ -44,7 +44,7 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId: user.uid, firstName: signUpData.firstName, lastName: signUpData.lastName}),
+        body: JSON.stringify({ userId: user.uid, email: user.email, firstName: signUpData.firstName, lastName: signUpData.lastName}),
       });
       setError("");
       if (!response.ok) {
@@ -53,7 +53,7 @@ export default function Login() {
     } catch (err) {
       console.error("A problem occurred with your fetch operation: ", err);
     } finally {
-      navigate("/home")
+      navigate("/connect")
     }
   }
 

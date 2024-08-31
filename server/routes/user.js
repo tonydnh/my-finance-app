@@ -10,6 +10,7 @@ router.post("/addUser", async (req, res) => {
   try {
     let newDocument = {
       _id: req.body.userId,
+      email: req.body.email,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
     };

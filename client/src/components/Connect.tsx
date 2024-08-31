@@ -15,7 +15,7 @@ export default function Connect() {
   });
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center p-6">
+    <div className="h-full flex justify-center items-center p-6">
       <div className="flex flex-col items-center gap-4">
         <div className="text-center font-bold text-5xl">
           Welcome to MyFinance!

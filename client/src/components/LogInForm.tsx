@@ -11,7 +11,7 @@ interface LogInFormProps {
 }
 
 export default function LogInForm({ onSubmit, errorMsg }: LogInFormProps) {
-  const { register, handleSubmit, reset, formState: {errors} } = useForm<LogInFormData>();
+  const { register, handleSubmit, formState: {errors} } = useForm<LogInFormData>();
 
   function onFormSubmit(data: LogInFormData) {
     onSubmit(data);

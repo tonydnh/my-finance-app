@@ -30,10 +30,14 @@ createRoot(document.getElementById('root')!).render(
           <Route element={<App />} path="/login">
             <Route index element={<Login />} />
           </Route>
-
-          <Route element={<ProtectedRoutes />}>
-            <Route element={<Home />} path="/home" />
-            <Route element={<Create />} path="/create" />
+          
+          {/* Wrap in Route with App component to allow Navbar to be shown*/}
+          <Route element={<App />}> 
+            <Route element={<ProtectedRoutes />}>
+              <Route element={<Connect />} path="/connect" />
+              <Route element={<Home />} path="/home" />
+              <Route element={<Create />} path="/create" />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

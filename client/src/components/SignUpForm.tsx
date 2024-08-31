@@ -13,7 +13,7 @@ interface SignUpFormProps {
 }
 
 export default function SignUpForm({ onSubmit, errorMsg }: SignUpFormProps) {
-  const { register, handleSubmit, reset, formState: {errors} } = useForm<SignUpFormData>();
+  const { register, handleSubmit, formState: {errors} } = useForm<SignUpFormData>();
 
   // OR: get rid of this fucntion and changing onSubmit line to onSubmit={handleSubmit(onSubmit)} (data is implicitly passed)
   function onFormSubmit(data: SignUpFormData)  {
