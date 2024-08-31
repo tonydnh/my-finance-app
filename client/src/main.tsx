@@ -1,8 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import  {
-  createBrowserRouter,
-  RouterProvider,
   Navigate,
   BrowserRouter,
   Routes,
@@ -16,59 +14,29 @@ import Create from './components/Create.tsx';
 import Login from './components/Login.tsx';
 import LogInForm from './components/LogInForm.tsx';
 import SignUpForm from './components/SignUpForm.tsx';
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Navigate to="/register" replace />
-  },
-  {
-    path: "/register",
-    element: <App />,
-    children: [
-      {
-        path: "",
-        element: <Login />,
-      },
-    ]
-  },
-  {
-    path: "/login",
-    element: <App />,
-    children: [
-      {
-        path: "",
-        element: <Login />,
-      },
-    ],
-  },
-  {
-    path: "/home",
-    element: <Home />,
-  },
-  {
-    path: "/create",
-    element: <Create />,
-  },
-]);
+import ProtectedRoutes from './utils/ProtectedRoutes.tsx';
+import { AuthProvider } from './contexts/AuthContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Navigate to="/register" replace />} path="/" />
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Navigate to="/register" replace />} path="/" />
 
-        <Route element={<App />} path="/register">
-          <Route index element={<Login />} />
-        </Route>
-        <Route element={<App />} path="/login">
-          <Route index element={<Login />} />
-        </Route>
+          <Route element={<App />} path="/register">
+            <Route index element={<Login />} />
+          </Route>
+          <Route element={<App />} path="/login">
+            <Route index element={<Login />} />
+          </Route>
 
-        <Route element={<Home />} path="/home" />
-        <Route element={<Create />} path="/create" />
-
-      </Routes>
-    </BrowserRouter>
+          <Route element={<ProtectedRoutes />}>
+            <Route element={<Home />} path="/home" />
+            <Route element={<Create />} path="/create" />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 );

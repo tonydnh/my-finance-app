@@ -4,12 +4,11 @@ import { LogInFormData } from './LogInForm';
 import LogInForm from './LogInForm';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { logInUser, createUser } from '../firebase/auth';
-import { useAuth } from '../contexts/AuthContext';
 import { useState } from 'react';
+import { User } from 'firebase/auth';
 
 
 export default function Login() {
-  const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState("");
@@ -18,8 +17,8 @@ export default function Login() {
 
   async function handleLogin(loginData: LogInFormData) {
     try {
-      console.log(loginData);
-      const userCrediential = await logInUser(loginData.email, loginData.password);
+      const userCredential = await logInUser(loginData.email, loginData.password);
+      navigate("/home");
     } catch (err) {
       setError("Email and/or password is incorrect.");
     }
@@ -27,11 +26,34 @@ export default function Login() {
 
   async function handleSignUp(signUpData: SignUpFormData) {
     try {
-      console.log(signUpData);
-      const userCrediential =  await createUser(signUpData.email, signUpData.password);
-      setError("");
+      const userCredential =  await createUser(signUpData.email, signUpData.password);
+      addUserToDatabase(userCredential.user, signUpData);
     } catch (err) {
-      setError("Minimum password length is 6.");
+      if (err.code === "auth/email-already-in-use") {
+        setError("That email is already associated with an account.");
+      } else if (err.code === "auth/weak-password") {
+        setError("Minimum password length is 6.");
+      }
+    }
+  }
+
+  async function addUserToDatabase(user: User, signUpData: SignUpFormData) {
+    try {
+      const response = await fetch("http://localhost:5050/user/addUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: user.uid, firstName: signUpData.firstName, lastName: signUpData.lastName}),
+      });
+      setError("");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (err) {
+      console.error("A problem occurred with your fetch operation: ", err);
+    } finally {
+      navigate("/home")
     }
   }
 

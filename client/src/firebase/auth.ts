@@ -9,6 +9,6 @@ export const logInUser = async (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 }
 
-export const doSignOut = () => {
+export const doSignOut = async () => {
   return auth.signOut();
 }
