@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../contexts/AuthContext';
 
 interface CategoryFormData {
   categoryName: string,
@@ -9,11 +10,32 @@ interface CategoryFormData {
 
 export default function Create() {
   const { register, handleSubmit, reset, formState: {errors} } = useForm<CategoryFormData>();
-  const [categories, setCategories] = useState<CategoryFormData[]>([]);
+  const { currentUser } = useAuth();
 
   async function onSubmit(data: CategoryFormData) {
-    setCategories([...categories, data]);
-    reset();
+    // Send category to backend to add to database
+    try {
+      const id = currentUser ? currentUser.uid : undefined;
+      if (!id) {
+        return;
+      }
+
+      await fetch(`http://localhost:5050/spending/${id}/addCategory`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          category: {
+            categoryName: data.categoryName,
+            description: data.description,
+            color: data.color,
+          },
+        }),
+      });
+    } catch (err) {
+      console.error("Error adding category to database: ", err);
+    }
   }
 
   return (

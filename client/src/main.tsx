@@ -16,30 +16,33 @@ import LogInForm from './components/LogInForm.tsx';
 import SignUpForm from './components/SignUpForm.tsx';
 import ProtectedRoutes from './utils/ProtectedRoutes.tsx';
 import { AuthProvider } from './contexts/AuthContext.tsx';
+import { UserDataProvider } from './contexts/UserDataContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
       <BrowserRouter>
-        <Routes>
-          <Route element={<Navigate to="/register" replace />} path="/" />
+        <UserDataProvider> {/* Under BrowserRouter rather than out because useNavigate is used */}
+          <Routes>
+            <Route element={<Navigate to="/register" replace />} path="/" />
 
-          <Route element={<App />} path="/register">
-            <Route index element={<Login />} />
-          </Route>
-          <Route element={<App />} path="/login">
-            <Route index element={<Login />} />
-          </Route>
-          
-          {/* Wrap in Route with App component to allow Navbar to be shown*/}
-          <Route element={<App />}> 
-            <Route element={<ProtectedRoutes />}>
-              <Route element={<Connect />} path="/connect" />
-              <Route element={<Home />} path="/home" />
-              <Route element={<Create />} path="/create" />
+            <Route element={<App />} path="/register">
+              <Route index element={<Login />} />
             </Route>
-          </Route>
-        </Routes>
+            <Route element={<App />} path="/login">
+              <Route index element={<Login />} />
+            </Route>
+            
+            {/* Wrap in Route with App component to allow Navbar to be shown*/}
+            <Route element={<App />}> 
+              <Route element={<ProtectedRoutes />}>
+                <Route element={<Connect />} path="/connect" />
+                <Route element={<Home />} path="/home" />
+                <Route element={<Create />} path="/create" />
+              </Route>
+            </Route>
+          </Routes>
+        </UserDataProvider>
       </BrowserRouter>
     </AuthProvider>
   </StrictMode>,

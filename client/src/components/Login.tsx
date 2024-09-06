@@ -51,7 +51,7 @@ export default function Login() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (err) {
-      console.error("A problem occurred with your fetch operation: ", err);
+      console.error("Error adding user to database: ", err);
     } finally {
       navigate("/connect")
     }
@@ -69,7 +69,7 @@ export default function Login() {
     <div className="w-screen h-screen flex flex-col justify-center items-center p-6 gap-4">
       <div className="flex flex-col items-center gap-2">
         <div className="text-center text-slate-900 font-bold text-5xl">
-          Welcome to MyFinance!
+          MyFinance
         </div>
         <div className="text-center font-extralight text-xl">
           Log in to get started.

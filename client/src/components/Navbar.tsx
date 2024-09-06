@@ -11,9 +11,12 @@ export default function Navbar() {
 
   return (
     <div className="flex py-4 border-b border-solid border-slate-300 mx-4">
-      <div className="text-3xl font-semibold">
+      <button 
+        onClick={() => navigate("/home")}
+        className="text-3xl font-semibold"
+      >
         MyFinance
-      </div>
+      </button>
       <button
         onClick={signUserOut}
         className="ml-auto px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-blue-300"

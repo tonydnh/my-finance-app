@@ -1,7 +1,5 @@
 import express from "express";
 import db from "../db/connection.js";
-// This will help convert the id from string to ObjectId for the _id.
-import { ObjectId } from "mongodb";
 
 const router = express.Router();
 
@@ -17,16 +15,24 @@ router.post("/addUser", async (req, res) => {
     let collection = await db.collection("users");
     let result = await collection.insertOne(newDocument);
     res.send(result).status(204);
+
+    // Create document for transactions/categories
+    newDocument = {
+      _id: req.body.userId,
+    }
+    collection = await db.collection("spending");
+    result = await collection.insertOne(newDocument);
+    res.send(result).status(204);
   } catch (err) {
-    console.err(err);
-    res.status(500).send("Error adding record");
+    console.error(err);
+    res.status(500).send("Error adding user");
   }
 });
 
 // Get a user by id
 router.get("/:id", async (req, res) => {
   let collection = await db.collection("users");
-  let query = {_id: req.params.id};
+  let query = { _id: req.params.id };
   let result = await collection.findOne(query);
 
   if (!result) {
@@ -36,4 +42,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-export default router
+// Update a user's record
+router.patch("/:id", async (req, res) => {
+  try {
+    const query = { _id: req.params.id };
+    const updates = {
+      $set: req.body
+    };
+
+    let collection = await db.collection("users");
+    let result = await collection.updateOne(query, updates);
+    res.send(result).status(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error updating user record.");
+  }
+});
+
+export default router;

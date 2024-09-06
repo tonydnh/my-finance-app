@@ -2,11 +2,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Option from './Option';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { doSignOut } from '../firebase/auth';
 
 export default function Home() {
   const navigate = useNavigate();
-  const { currentUser, loading } = useAuth();
+  const { currentUser } = useAuth();
   const [record, setRecord] = useState(null);
 
   // Fetch the database records for this user
@@ -31,17 +30,10 @@ export default function Home() {
         return;
       }
       setRecord(record);
-      console.log(`Record found: ${record}`);
     }
 
     fetchData();
   }, [currentUser, navigate]);
-
-  async function signUserOut() {
-    await doSignOut();
-    console.log(currentUser);
-    navigate("/login");
-  }
 
   return (
     <div className="h-full flex flex-col items-center justify-center gap-4">
