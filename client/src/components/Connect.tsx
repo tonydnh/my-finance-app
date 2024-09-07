@@ -15,7 +15,7 @@ export default function Connect() {
         if (!id) {
           return;
         }
-        let response = await fetch(`http://localhost:5050/user/${id}`, {
+        let response = await fetch(`http://localhost:5050/users/${id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export default function Connect() {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
+        
         response = await fetch("http://localhost:5050/teller/enrollment", {
           method: "POST",
           headers: {

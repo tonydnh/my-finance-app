@@ -13,16 +13,22 @@ router.post("/addUser", async (req, res) => {
       lastName: req.body.lastName,
     };
     let collection = await db.collection("users");
-    let result = await collection.insertOne(newDocument);
+    let userResult = await collection.insertOne(newDocument);
     res.send(result).status(204);
 
     // Create document for transactions/categories
     newDocument = {
       _id: req.body.userId,
+      categories: [],
+      transactions: [],
     }
-    collection = await db.collection("spending");
-    result = await collection.insertOne(newDocument);
-    res.send(result).status(204);
+    collection = await db.collection("finances");
+    let financeResult = await collection.insertOne(newDocument);
+    
+    res.status(201).json({
+      userResult: userResult,
+      financeResult: financeResult,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding user");
@@ -35,10 +41,10 @@ router.get("/:id", async (req, res) => {
   let query = { _id: req.params.id };
   let result = await collection.findOne(query);
 
-  if (!result) {
-    res.send("Not found").status(404);
-  } else {
+  if (result) {
     res.send(result).status(200);
+  } else {
+    res.status(404).send("User not found");
   }
 });
 

@@ -39,7 +39,7 @@ export default function Login() {
 
   async function addUserToDatabase(user: User, signUpData: SignUpFormData) {
     try {
-      const response = await fetch("http://localhost:5050/user/addUser", {
+      const response = await fetch("http://localhost:5050/users/addUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -16,7 +16,7 @@ export default function Home() {
         return;
       }
 
-      const response = await fetch(`http://localhost:5050/user/${id}`);
+      const response = await fetch(`http://localhost:5050/users/${id}`);
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         console.error(message);
@@ -44,7 +44,7 @@ export default function Home() {
       )}
 
       <Option textLabel="Create a custom spending category" buttonLabel="Create" onClick={() => navigate("/create")} />
-      <Option textLabel="Mark transactions" buttonLabel="Mark" onClick={() => {}} />
+      <Option textLabel="Mark transactions" buttonLabel="Mark" onClick={() => navigate("/mark")} />
       <Option textLabel="View Spending" buttonLabel="View" onClick={() => {}} />
     </div>
   );

@@ -7,16 +7,15 @@ import  {
   Route,
 } from 'react-router-dom';
 import './index.css';
+import { AuthProvider } from './contexts/AuthContext.tsx';
+import { UserDataProvider } from './contexts/UserDataContext.tsx';
 import App from './App.tsx'
 import Connect from './components/Connect.tsx';
 import Home from './components/Home.tsx';
 import Create from './components/Create.tsx';
 import Login from './components/Login.tsx';
-import LogInForm from './components/LogInForm.tsx';
-import SignUpForm from './components/SignUpForm.tsx';
 import ProtectedRoutes from './utils/ProtectedRoutes.tsx';
-import { AuthProvider } from './contexts/AuthContext.tsx';
-import { UserDataProvider } from './contexts/UserDataContext.tsx';
+import Mark from './components/Mark.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -39,6 +38,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route element={<Connect />} path="/connect" />
                 <Route element={<Home />} path="/home" />
                 <Route element={<Create />} path="/create" />
+                <Route element={<Mark />} path="/mark" />
               </Route>
             </Route>
           </Routes>

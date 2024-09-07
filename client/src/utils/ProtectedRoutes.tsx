@@ -9,5 +9,5 @@ export default function ProtectedRoutes() {
     return;
   }
 
-  return currentUser ? <Outlet /> : <Navigate to="/register" />;
+  return currentUser ? <Outlet /> : <Navigate to="/login" />;
 }

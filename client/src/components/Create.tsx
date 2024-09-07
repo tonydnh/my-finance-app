@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useUserData } from '../contexts/UserDataContext';
 
 interface CategoryFormData {
   categoryName: string,
@@ -11,6 +13,8 @@ interface CategoryFormData {
 export default function Create() {
   const { register, handleSubmit, reset, formState: {errors} } = useForm<CategoryFormData>();
   const { currentUser } = useAuth();
+  const { newCategoryMade, setNewCategoryMade } = useUserData();
+  const navigate = useNavigate();
 
   async function onSubmit(data: CategoryFormData) {
     // Send category to backend to add to database
@@ -20,7 +24,7 @@ export default function Create() {
         return;
       }
 
-      await fetch(`http://localhost:5050/spending/${id}/addCategory`, {
+      await fetch(`http://localhost:5050/finances/addCategory/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -35,6 +39,9 @@ export default function Create() {
       });
     } catch (err) {
       console.error("Error adding category to database: ", err);
+    } finally {
+      setNewCategoryMade(!newCategoryMade);
+      navigate("/mark");
     }
   }
 

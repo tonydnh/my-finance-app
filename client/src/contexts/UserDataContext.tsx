@@ -10,38 +10,76 @@ export function useUserData() {
 
 // Fetch user data from database using useContext so it can be shared across different components
 export function UserDataProvider({ children }) {
-  const [userData, setUserData] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [userTransactions, setUserTransactions] = useState(null);
+  const [userCategories, setUserCategories] = useState(null);
+  const [newCategoryMade, setNewCategoryMade] = useState(false); // Switch between true/false to detect new categories made
   const { currentUser } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchUserInfo() {
       const id = currentUser ? currentUser.uid : undefined;
       if (!id) {
         return;
       }
 
-      const response = await fetch(`http://localhost:5050/user/${id}`);
+      const response = await fetch(`http://localhost:5050/users/${id}`);
       if (!response.ok) {
-        const message = `An error has occurred: ${response.statusText}`;
-        console.error(message);
+        console.error(`An error has occurred: ${response.statusText}`);
         return;
       }
 
-      const userData = await response.json();
-      if (!userData) {
-        console.warn(`Record with id ${id} not found`);
-        navigate("/");
-        return;
-      }
-      setUserData(userData);
+      const userInfo = await response.json();
+      setUserInfo(userInfo);
     }
 
-    fetchData();
-  }, [currentUser, navigate]);
+    async function fetchUserTransactions() {
+      const id = currentUser ? currentUser.uid : undefined;
+      if (!id) {
+        return;
+      }
+
+      // const response = await fetch(`http://localhost:5050/finances/transactions/${id}`);
+      // if (!response.ok) {
+      //   console.error(`An error has occurred while fetching transactions: ${response.statusText}`);
+      //   return;
+      // }
+
+      // const transactions = await response.json();
+      // setUserTransactions(transactions);
+    }
+
+    fetchUserInfo();
+    fetchUserTransactions();
+  }, [currentUser]);
+
+  // Fetch categories when auth changes or a new category is made
+  useEffect(() => {
+    async function fetchUserCategories() {
+      const id = currentUser ? currentUser.uid : undefined;
+      if (!id) {
+        return;
+      }
+
+      const response = await fetch(`http://localhost:5050/finances/categories/${id}`);
+      if (!response.ok) {
+        console.error(`An error has occurred while fetching categories: ${response.statusText}`);
+        return;
+      }
+
+      const categories = await response.json();
+      setUserCategories(categories);
+    }
+
+    fetchUserCategories();
+  }, [currentUser, newCategoryMade]);
 
   const value = {
-    userData
+    newCategoryMade,
+    setNewCategoryMade,
+    userInfo,
+    userTransactions,
+    userCategories,
   }
 
   return (
