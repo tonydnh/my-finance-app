@@ -10,10 +10,7 @@ export function useUserData() {
 
 // Fetch user data from database using useContext so it can be shared across different components
 export function UserDataProvider({ children }) {
-  // const [userInfo, setUserInfo] = useState(null);
-  // const [userTransactions, setUserTransactions] = useState(null);
-  // const [userCategories, setUserCategories] = useState(null);
-  const [newCategoryMade, setNewCategoryMade] = useState(false); // Switch between true/false to detect new categories made
+  const [updateCategory, setUpdateCategory] = useState(false);
   const { currentUser } = useAuth();
 
   const [userInfo, setUserInfo] = useState(() => {
@@ -81,7 +78,7 @@ export function UserDataProvider({ children }) {
   useEffect(() => {
     async function fetchUserCategories() {
       const id = currentUser ? currentUser.uid : undefined;
-      if (!id || (userCategories && !newCategoryMade)) {
+      if (!id || (userCategories && !updateCategory)) {
         return;
       }
 
@@ -97,15 +94,15 @@ export function UserDataProvider({ children }) {
       localStorage.setItem("userCategories", JSON.stringify(fetchedCategories));
     }
 
-    if (newCategoryMade) {
-      setNewCategoryMade(false);
+    if (updateCategory) {
+      setUpdateCategory(false);
     }
 
     fetchUserCategories();
-  }, [currentUser, userCategories, newCategoryMade]);
+  }, [currentUser, userCategories, updateCategory]);
 
   const value = {
-    setNewCategoryMade,
+    setUpdateCategory,
     userInfo,
     userTransactions,
     userCategories,

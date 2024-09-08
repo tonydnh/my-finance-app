@@ -14,7 +14,7 @@ interface CategoryFormData {
 export default function Create() {
   const { register, handleSubmit, formState: {errors} } = useForm<CategoryFormData>();
   const { currentUser } = useAuth();
-  const { setNewCategoryMade } = useUserData();
+  const { setUpdateCategory } = useUserData();
   const navigate = useNavigate();
 
   async function onSubmit(data: CategoryFormData) {
@@ -43,7 +43,7 @@ export default function Create() {
     } catch (err) {
       console.error("Error adding category to database: ", err);
     } finally {
-      setNewCategoryMade(true);
+      setUpdateCategory(true);
       navigate("/mark");
     }
   }

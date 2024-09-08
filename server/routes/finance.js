@@ -3,6 +3,7 @@ import db from "../db/connection.js";
 import userData from "../utils/userData.js";
 
 const router = express.Router();
+const collection = await db.collection("finances");
 
 // Add category to database
 router.patch("/addCategory/:id", async (req, res) => {
@@ -14,12 +15,29 @@ router.patch("/addCategory/:id", async (req, res) => {
       },
     };
 
-    let collection = await db.collection("finances");
-    let result = await collection.updateOne(query, updates);
-    res.send(result).status(200);
+    await collection.updateOne(query, updates);
+    res.send("Success").status(200);
   } catch (err) {
     console.error(err);
     res.status(500).send("Error adding category to database.");
+  }
+});
+
+// Save marked transactions with corresponding category to database
+router.patch("/markTransactions/:id/:categoryId", async (req, res) => {
+  try {
+    const query = { _id: req.params.id, "categories.id": req.params.categoryId };
+    const updates = {
+      $set: {
+        "categories.$.transactions": req.body,
+      },
+    }
+
+    await collection.updateOne(query, updates);
+    res.send("Success").status(200);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error saving marked transactions to database");
   }
 });
 
@@ -34,7 +52,6 @@ router.get("/transactions/:id", async (req, res) => {
         transactions: transactions
       },
     };
-    let collection = await db.collection("finances");
     await collection.updateOne(query, updates);
 
     if (transactions) {
@@ -51,7 +68,6 @@ router.get("/transactions/:id", async (req, res) => {
 // Get the user's categories from the database
 router.get("/categories/:id", async (req, res) => {
   const query = { _id: req.params.id };
-  let collection = await db.collection("finances");
   let result = await collection.findOne(query);
 
   if (result) {
