@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useUserData } from '../contexts/UserDataContext';
+import { v4 as uuidv4 } from "uuid";
 
 interface CategoryFormData {
   categoryName: string,
@@ -11,9 +12,9 @@ interface CategoryFormData {
 }
 
 export default function Create() {
-  const { register, handleSubmit, reset, formState: {errors} } = useForm<CategoryFormData>();
+  const { register, handleSubmit, formState: {errors} } = useForm<CategoryFormData>();
   const { currentUser } = useAuth();
-  const { newCategoryMade, setNewCategoryMade } = useUserData();
+  const { setNewCategoryMade } = useUserData();
   const navigate = useNavigate();
 
   async function onSubmit(data: CategoryFormData) {
@@ -31,16 +32,18 @@ export default function Create() {
         },
         body: JSON.stringify({
           category: {
+            id: uuidv4(),
             categoryName: data.categoryName,
             description: data.description,
             color: data.color,
+            transactions: [],
           },
         }),
       });
     } catch (err) {
       console.error("Error adding category to database: ", err);
     } finally {
-      setNewCategoryMade(!newCategoryMade);
+      setNewCategoryMade(true);
       navigate("/mark");
     }
   }

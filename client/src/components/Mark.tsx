@@ -7,13 +7,44 @@ import { useUserData } from '../contexts/UserDataContext';
 export default function Mark() {
   const [mark, setMark] = useState(false);
   const { userCategories, userTransactions } = useUserData();
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedTransactions, setSelectedTransactions] = useState<string[]>([]);
 
+  // Toggle category selection
+  function handleCategoryToggle(categoryId: string) {
+    setSelectedCategories(prevSelected => {
+      if (prevSelected.includes(categoryId)) {
+        return prevSelected.filter(id => id !== categoryId);
+      } else {
+        return [...prevSelected, categoryId];
+      }
+    });
+  }
+
+  // Toggle transaction selection
+  function handleTransactionToggle(transactionId: string) {
+    setSelectedTransactions(prevSelected => {
+      if (prevSelected.includes(transactionId)) {
+        return prevSelected.filter(id => id !== transactionId);
+      } else {
+        return [...prevSelected, transactionId];
+      }
+    });
+  }
+  
   // Display the categories
   const categories = [];
   if (userCategories) {
     userCategories.forEach((category, index) => {
       categories.push(
-        <Category key={index} categoryName={category.categoryName} color={category.color} />
+        <Category 
+          key={index} 
+          id={category.id}
+          categoryName={category.categoryName} 
+          color={category.color}
+          selected={selectedCategories.includes(category.id)}
+          onToggle={handleCategoryToggle}
+        />
       );
     });
   }
@@ -23,7 +54,15 @@ export default function Mark() {
   if (userTransactions) {
     userTransactions.forEach((transaction, index) => {
       transactions.push(
-        <Transaction key={index} date={transaction.date} details={transaction.description} amount={"$" + transaction.amount.substring(1)} />
+        <Transaction
+          key={index} 
+          id={transaction.id}
+          date={transaction.date} 
+          description={transaction.description} 
+          amount={"$" + transaction.amount.substring(1)}
+          selected={selectedTransactions.includes(transaction.id)}
+          onToggle={handleTransactionToggle}
+        />
       );
     });
   }

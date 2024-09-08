@@ -97,11 +97,14 @@ export function UserDataProvider({ children }) {
       localStorage.setItem("userCategories", JSON.stringify(fetchedCategories));
     }
 
+    if (newCategoryMade) {
+      setNewCategoryMade(false);
+    }
+
     fetchUserCategories();
   }, [currentUser, userCategories, newCategoryMade]);
 
   const value = {
-    newCategoryMade,
     setNewCategoryMade,
     userInfo,
     userTransactions,

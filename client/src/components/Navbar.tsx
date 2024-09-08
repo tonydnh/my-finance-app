@@ -7,6 +7,7 @@ export default function Navbar() {
   async function signUserOut() {
     await doSignOut();
     navigate("/login");
+    window.location.reload(); // Reset UserDataContext
   }
 
   return (

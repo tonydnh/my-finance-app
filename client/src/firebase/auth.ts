@@ -10,5 +10,6 @@ export const logInUser = async (email: string, password: string) => {
 }
 
 export const doSignOut = async () => {
+  localStorage.clear();
   return auth.signOut();
 }
