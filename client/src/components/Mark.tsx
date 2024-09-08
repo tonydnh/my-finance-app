@@ -8,11 +8,22 @@ export default function Mark() {
   const [mark, setMark] = useState(false);
   const { userCategories, userTransactions } = useUserData();
 
+  // Display the categories
   const categories = [];
   if (userCategories) {
     userCategories.forEach((category, index) => {
       categories.push(
         <Category key={index} categoryName={category.categoryName} color={category.color} />
+      );
+    });
+  }
+
+  // Display the transactions
+  const transactions = [];
+  if (userTransactions) {
+    userTransactions.forEach((transaction, index) => {
+      transactions.push(
+        <Transaction key={index} date={transaction.date} details={transaction.description} amount={transaction.amount} />
       );
     });
   }
@@ -35,17 +46,7 @@ export default function Mark() {
             <div className="text-3xl font-medium text-center">Transactions</div>
             {/* Scrollable Container */}
             <div className="flex flex-col h-[34rem] gap-2 p-2 overflow-y-auto">
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
-              <Transaction date={"8/15/2024"} details={"AMAZON PURCHASE"} amount={"$70.25"} />
+              {transactions}
             </div>
             <button
               type="submit"

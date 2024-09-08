@@ -39,14 +39,14 @@ export function UserDataProvider({ children }) {
         return;
       }
 
-      // const response = await fetch(`http://localhost:5050/finances/transactions/${id}`);
-      // if (!response.ok) {
-      //   console.error(`An error has occurred while fetching transactions: ${response.statusText}`);
-      //   return;
-      // }
+      const response = await fetch(`http://localhost:5050/finances/transactions/${id}`);
+      if (!response.ok) {
+        console.error(`An error has occurred while fetching transactions: ${response.statusText}`);
+        return;
+      }
 
-      // const transactions = await response.json();
-      // setUserTransactions(transactions);
+      const transactions = await response.json();
+      setUserTransactions(transactions);
     }
 
     fetchUserInfo();
