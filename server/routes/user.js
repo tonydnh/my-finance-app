@@ -14,7 +14,6 @@ router.post("/addUser", async (req, res) => {
     };
     let collection = await db.collection("users");
     let userResult = await collection.insertOne(newDocument);
-    res.send(result).status(204);
 
     // Create document for transactions/categories
     newDocument = {

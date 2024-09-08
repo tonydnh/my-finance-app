@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTellerConnect } from 'teller-connect-react';
 import { useAuth } from '../contexts/AuthContext';
+import { useUserData } from '../contexts/UserDataContext';
 
 export default function Connect() {
   const navigate = useNavigate();

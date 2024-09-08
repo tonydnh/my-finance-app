@@ -43,7 +43,11 @@ async function getTransactions() {
       httpsAgent: agent,
     });
 
-    userData.setTransactions(response.data);
+    // Filter out deposits/credits
+    const transactions = response.data;
+    const withdrawals = transactions.filter(transaction => Number(transaction.amount) < 0);
+
+    userData.setTransactions(withdrawals);
   } catch (err) {
     console.error("Error fetching transactions: ", err.message);
   }

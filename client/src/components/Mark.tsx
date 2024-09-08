@@ -23,7 +23,7 @@ export default function Mark() {
   if (userTransactions) {
     userTransactions.forEach((transaction, index) => {
       transactions.push(
-        <Transaction key={index} date={transaction.date} details={transaction.description} amount={transaction.amount} />
+        <Transaction key={index} date={transaction.date} details={transaction.description} amount={"$" + transaction.amount.substring(1)} />
       );
     });
   }
