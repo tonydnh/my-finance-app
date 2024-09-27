@@ -29,7 +29,8 @@ router.patch("/markTransactions/:id/:categoryId", async (req, res) => {
     const query = { _id: req.params.id, "categories.id": req.params.categoryId };
     const updates = {
       $set: {
-        "categories.$.transactions": req.body,
+        "categories.$.transactions": req.body.transactions,
+        "categories.$.total": req.body.total,
       },
     }
 

@@ -16,6 +16,7 @@ import Create from './components/Create.tsx';
 import Login from './components/Login.tsx';
 import ProtectedRoutes from './utils/ProtectedRoutes.tsx';
 import Mark from './components/Mark.tsx';
+import Spending from './components/Spending.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -39,6 +40,7 @@ createRoot(document.getElementById('root')!).render(
                 <Route element={<Home />} path="/home" />
                 <Route element={<Create />} path="/create" />
                 <Route element={<Mark />} path="/mark" />
+                <Route element={<Spending />} path="/spending" />
               </Route>
             </Route>
           </Routes>

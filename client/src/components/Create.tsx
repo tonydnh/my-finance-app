@@ -36,6 +36,7 @@ export default function Create() {
             categoryName: data.categoryName,
             description: data.description,
             color: data.color,
+            total: 0,
             transactions: [],
           },
         }),

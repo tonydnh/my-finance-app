@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Option from './Option';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
@@ -45,7 +45,7 @@ export default function Home() {
 
       <Option textLabel="Create a custom spending category" buttonLabel="Create" onClick={() => navigate("/create")} />
       <Option textLabel="Mark transactions" buttonLabel="Mark" onClick={() => navigate("/mark")} />
-      <Option textLabel="View Spending" buttonLabel="View" onClick={() => {}} />
+      <Option textLabel="View Spending" buttonLabel="View" onClick={() => navigate("/spending")} />
     </div>
   );
 }

@@ -88,6 +88,13 @@ export default function Mark() {
       }
 
       const transactionObjects = userTransactions.filter(transaction => selectedTransactions.includes(transaction.id));
+      
+      // Calculate sum of transactions
+      let totalCost = 0
+      transactionObjects.forEach(transaction => totalCost += parseFloat(transaction.amount));
+      // Negative sum because Teller stores amounts as negatives
+      totalCost *= -1;
+      totalCost = parseFloat(totalCost.toFixed(2)); // Round to 2 decimal places
 
       for (const categoryId of selectedCategories) {
         try {
@@ -96,7 +103,7 @@ export default function Mark() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(transactionObjects),
+            body: JSON.stringify({ transactions: transactionObjects, total: totalCost }),
           });
           console.log(transactionObjects);
         } catch (err) {

@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const UserDataContext = createContext(null);
 
