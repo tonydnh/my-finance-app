@@ -34,7 +34,7 @@ export default function Mark() {
         : [...prevSelected, transactionId];
       
         if (newTransactions.length == 0) {
-          // No trans
+          // No transaction
           setShowMarkOption(false);
         } else {
           // User just marked transactions
