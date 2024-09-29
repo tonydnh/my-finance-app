@@ -28,6 +28,7 @@ From working on this project, I learned how to:
 - Implement persistent data storage with non-relational databases
 - Integrate user authentication
 - Leverage external APIs
+- Route in React
 - Write TypeScript code and use Tailwind
 - Develop a backend with Node.js/Express.js
 
