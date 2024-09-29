@@ -4,7 +4,7 @@ A personal finance app that allows you to track your spending with custom user-m
 
 # Demo
 
-![MyFinance Demo](https://github.com/user-attachments/assets/68d26fca-4312-4029-bc07-442d650b9257)
+https://github.com/user-attachments/assets/68d26fca-4312-4029-bc07-442d650b9257
 
 # Tech Stack
 
