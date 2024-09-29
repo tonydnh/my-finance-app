@@ -31,7 +31,7 @@ From working on this project, I learned how to:
 - Write TypeScript code and use Tailwind
 - Develop a backend with Node.js/Express.js
 
-# Future Features
+# To Do List
 
 - Improve UI
 - Dark mode
