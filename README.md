@@ -29,4 +29,9 @@ From working on this project, I learned how to:
 - Integrate user authentication
 - Leverage external APIs
 - Write TypeScript code and use Tailwind
-- Develop a backend with Node.js/Express.js 
+- Develop a backend with Node.js/Express.js
+
+# Future Features
+
+- Improve UI
+- Dark mode
