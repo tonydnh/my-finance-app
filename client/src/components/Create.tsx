@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -67,7 +66,7 @@ export default function Create() {
               {...register("categoryName", { required: "This is required." })}
               id="categoryName"
               className="border border-slate-300 rounded py-1.5 pl-1 text-slate-900 placeholder:text-slate-400"
-              placeholder="Ex: Groceries"
+              placeholder="Ex: Apartment"
             />
             <p className="text-red-500">{typeof errors.categoryName?.message === "string" ? errors.categoryName.message : ""}</p>
           </div>

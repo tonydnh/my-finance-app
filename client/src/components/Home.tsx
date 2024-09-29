@@ -2,11 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import Option from './Option';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useUserData } from '../contexts/UserDataContext';
 
 export default function Home() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [record, setRecord] = useState(null);
+  const { userInfo } = useUserData();
 
   // Fetch the database records for this user
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function Home() {
         </div>
       )}
 
-      <Option textLabel="Create a custom spending category" buttonLabel="Create" onClick={() => navigate("/create")} />
+      <Option textLabel="Create a spending category" buttonLabel="Create" onClick={() => navigate("/create")} />
       <Option textLabel="Mark transactions" buttonLabel="Mark" onClick={() => navigate("/mark")} />
       <Option textLabel="View Spending" buttonLabel="View" onClick={() => navigate("/spending")} />
     </div>
