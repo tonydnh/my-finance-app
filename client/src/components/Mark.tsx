@@ -46,7 +46,7 @@ export default function Mark() {
   }
   
   // Display the categories
-  const categories = [];
+  const categories: JSX.Element[] = [];
   if (userCategories) {
     userCategories.forEach((category, index) => {
       categories.push(
@@ -63,7 +63,7 @@ export default function Mark() {
   }
 
   // Display the transactions
-  const transactions = [];
+  const transactions: JSX.Element[] = [];
   if (userTransactions) {
     userTransactions.forEach((transaction, index) => {
       transactions.push(

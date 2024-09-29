@@ -17,7 +17,7 @@ export default function Login() {
 
   async function handleLogin(loginData: LogInFormData) {
     try {
-      const userCredential = await logInUser(loginData.email, loginData.password);
+      await logInUser(loginData.email, loginData.password);
       navigate("/connect");
     } catch (err) {
       setError("Email and/or password is incorrect.");

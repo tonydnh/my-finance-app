@@ -1,20 +1,32 @@
 import DoughnutChart from './spending-components/DoughnutChart';
-import { Chart } from 'chart.js/auto';
-import { CategoryScale } from 'chart.js/auto';
+import { Chart, ChartOptions, CategoryScale } from 'chart.js/auto';
 import { useUserData } from '../contexts/UserDataContext';
 import { useNavigate } from 'react-router-dom';
 import { MouseEvent, useRef, useState } from 'react';
 import { getElementsAtEvent } from 'react-chartjs-2';
 import Transaction from './mark-components/Transaction';
 
-
 Chart.register(CategoryScale);
+
+interface Category {
+  categoryName: string;
+  total: number;
+  color: string;
+  transactions: TransactionType[];
+}
+
+interface TransactionType {
+  id: string;
+  date: string;
+  description: string;
+  amount: string;
+}
 
 export default function Spending() {
   const { userCategories } = useUserData();
   const navigate = useNavigate();
   const chartRef = useRef();
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
   const spendingData = {
     labels: userCategories.map(category => category.categoryName),
@@ -25,12 +37,12 @@ export default function Spending() {
     }],
   };
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'doughnut'> = {
     cutout: '55%',
     plugins: {
       tooltip: {
         callbacks: {
-          label: function(tooltipItem) {
+          label: function(tooltipItem: { raw: number }) {
             // Adding "$" before the value for hover
             const value = tooltipItem.raw;
             return ` $${value.toLocaleString()}`; // Formats the value with commas as needed
@@ -58,7 +70,7 @@ export default function Spending() {
   const totals = userCategories.map(category => category.total);
   const totalSpending = (totals.reduce((total, curr) => total + curr, 0)).toFixed(2);
 
-  const transactions = [];
+  const transactions: JSX.Element[] = [];
   if (selectedCategory) {
     const categoryTransactions = selectedCategory.transactions;
     categoryTransactions.forEach((transaction, index) => {

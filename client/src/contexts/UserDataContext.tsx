@@ -1,14 +1,46 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuth } from "./AuthContext";
 
-const UserDataContext = createContext(null);
+const UserDataContext = createContext<UserDataContextType | null>(null);
 
 export function useUserData() {
-  return useContext(UserDataContext);
+  const context = useContext(UserDataContext);
+  if (context === null) {
+    throw new Error("useUserData must be used within an UserDataProvider");
+  }
+  return context;
 }
 
+interface TransactionType {
+  id: number;
+  date: string;
+  description: string;
+  amount: string;
+}
+
+interface Category {
+  categoryName: string;
+  total: number;
+  color: string;
+  transactions: TransactionType[];
+}
+
+interface UserDataContextType {
+  setUpdateCategory: (value: boolean) => void;
+  userInfo: UserInfo;
+  userTransactions: TransactionType[];
+  userCategories: Category[];
+}
+
+interface UserInfo {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
+
 // Fetch user data from database using useContext so it can be shared across different components
-export function UserDataProvider({ children }) {
+export function UserDataProvider({ children }: { children: React.ReactNode }) {
   const [updateCategory, setUpdateCategory] = useState(false);
   const { currentUser } = useAuth();
 
@@ -17,12 +49,12 @@ export function UserDataProvider({ children }) {
     return storedUserInfo ?  JSON.parse(storedUserInfo) : null;
   });
 
-  const [userTransactions, setUserTransactions] = useState(() => {
+  const [userTransactions, setUserTransactions] = useState<TransactionType[]>(() => {
     const storedTransactions = localStorage.getItem("userTransactions");
     return storedTransactions ?  JSON.parse(storedTransactions) : null;
   });
 
-  const [userCategories, setUserCategories] = useState(() => {
+  const [userCategories, setUserCategories] = useState<Category[]>(() => {
     const storedCategories = localStorage.getItem("userCategories");
     return storedCategories ?  JSON.parse(storedCategories) : null;
   });
@@ -65,7 +97,7 @@ export function UserDataProvider({ children }) {
         return;
       }
       
-      const fetchedTransactions = await response.json();
+      const fetchedTransactions: TransactionType[] = (await response.json() as TransactionType[]);
       setUserTransactions(fetchedTransactions);
       localStorage.setItem("userTransactions", JSON.stringify(fetchedTransactions));
     }
@@ -88,7 +120,7 @@ export function UserDataProvider({ children }) {
         return;
       }
 
-      const fetchedCategories = await response.json();
+      const fetchedCategories: Category[] = (await response.json() as Category[]);
       setUserCategories(fetchedCategories);
       localStorage.setItem("userCategories", JSON.stringify(fetchedCategories));
     }

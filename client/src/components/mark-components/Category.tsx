@@ -1,5 +1,13 @@
 
-export default function Category({ id, categoryName, color, selected, onToggle }) {
+interface CategoryProps {
+  id: string;
+  categoryName: string;
+  color: string;
+  selected: boolean;
+  onToggle: (id: string) => void;
+}
+
+export default function Category({ id, categoryName, color, selected, onToggle }: CategoryProps) {
 
   return (
     <button 

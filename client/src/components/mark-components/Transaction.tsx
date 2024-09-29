@@ -1,5 +1,14 @@
 
-export default function Transaction({ id, date, description, amount, selected, onToggle}) {
+interface TransactionProps {
+  id: string;
+  date: string;
+  description: string;
+  amount: string;
+  selected: boolean;
+  onToggle: (id: string) => void;
+}
+
+export default function Transaction({ id, date, description, amount, selected, onToggle}: TransactionProps) {
 
   return (
     <button
